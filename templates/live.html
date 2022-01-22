@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a class="btn btn-warning home" href="{{ url_for('index') }}">Главная страница</a>
+    <a class="btn btn-info refresh" href="{{ url_for('live') }}">Создать новую жизнь</a>
+    <table class="world">
+        {% for i in range(new_gen|length) %}
+            <tr>
+                {% for j in range(new_gen[i]|length) %}
+                    {% if new_gen[i][j] == 1 %}
+                        <td class="cell living-cell"></td>
+                    {% elif new_gen[i][j] == 0 and old_gen[i][j] == 1 %}
+                        <td class="cell dead-cell"></td>
+                    {% else %}
+                        <td class="cell"></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="counter">{{ gen_n }}</div>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script>
+        setInterval(() => window.location.reload(), 3000);
+    </script>
+{% endblock %}
